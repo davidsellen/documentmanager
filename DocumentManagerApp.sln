@@ -5,6 +5,10 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentApi", "src\DocumentApi\DocumentApi.csproj", "{D936C8E5-4533-4764-AF90-6AEB382AA233}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B23284E3-E8EA-4C64-881F-F9CE10D2A9A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentApiTests", "tests\DocumentApiTests\DocumentApiTests.csproj", "{1BE698B8-CD6A-4141-8E18-0D0DE63DB38E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,12 @@ Global
 		{D936C8E5-4533-4764-AF90-6AEB382AA233}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D936C8E5-4533-4764-AF90-6AEB382AA233}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D936C8E5-4533-4764-AF90-6AEB382AA233}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BE698B8-CD6A-4141-8E18-0D0DE63DB38E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BE698B8-CD6A-4141-8E18-0D0DE63DB38E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BE698B8-CD6A-4141-8E18-0D0DE63DB38E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BE698B8-CD6A-4141-8E18-0D0DE63DB38E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1BE698B8-CD6A-4141-8E18-0D0DE63DB38E} = {B23284E3-E8EA-4C64-881F-F9CE10D2A9A8}
 	EndGlobalSection
 EndGlobal
