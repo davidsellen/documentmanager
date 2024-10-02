@@ -6,14 +6,16 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using DocumentApi.Models;
 using DocumentApi.Services.Interfaces;
+using Microsoft.Extensions.Options;
+
 public class DocumentRepository : IDocumentRepository
 {
     private readonly IMongoCollection<Document> _documentsCollection;
 
-    public DocumentRepository(MongoDbSettings settings)
+    public DocumentRepository(IOptions<MongoDbSettings> settings)
     {
-        var client = new MongoClient(settings.ConnectionString);
-        var database = client.GetDatabase(settings.DatabaseName);
+        var client = new MongoClient(settings.Value.ConnectionString);
+        var database = client.GetDatabase(settings.Value.DatabaseName);
         _documentsCollection = database.GetCollection<Document>("Documents");
     }
 

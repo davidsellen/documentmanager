@@ -5,12 +5,20 @@ using DocumentApi.Repositories;
 using Amazon.S3;
 using Amazon.S3.Model;
 using MongoDB.Driver;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
-internal class Program
+namespace DocumentApi;
+
+public class Program
 {
-    private static void Main(string[] args)
+    public static void Main(string[] args)
     {
+
+       
         var builder = WebApplication.CreateBuilder(args);
+
+        builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection(nameof(MongoDbSettings)));
 
         // Add services to the container.
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -20,9 +28,10 @@ internal class Program
         // Register services
         //builder.Services.AddSingleton<IAmazonS3, MinioS3Client>(); // Configure MinIO client
         builder.Services.AddScoped<IFileStorageService, MinioFileStorageService>();
+        builder.Services.AddSingleton<IDocumentRepository, DocumentRepository>();
         builder.Services.AddScoped<IDocumentService, DocumentService>();
-        builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
-
+        builder.Services.AddControllers();
+        
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -38,6 +47,3 @@ internal class Program
         app.Run();
     }
 }
-
-public record LoginRequest(string email, string password);
-public record SignatureRequest(string email, string message);

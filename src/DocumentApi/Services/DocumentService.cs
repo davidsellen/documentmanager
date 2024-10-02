@@ -5,9 +5,9 @@ namespace DocumentApi.Services;
 
 public class DocumentService : Interfaces.IDocumentService
 {
-    private readonly DocumentRepository _documentRepository;
+    private readonly Interfaces.IDocumentRepository _documentRepository;
 
-    public DocumentService(DocumentRepository documentRepository)
+    public DocumentService(Interfaces.IDocumentRepository documentRepository)
     {
         _documentRepository = documentRepository;
     }
