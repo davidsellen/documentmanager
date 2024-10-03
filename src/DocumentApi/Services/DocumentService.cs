@@ -36,4 +36,9 @@ public class DocumentService : Interfaces.IDocumentService
     {
         await _documentRepository.AddAuditLogAsync(documentId, auditLog);
     }
+
+    public async Task<IEnumerable<Document>> GetAll()
+    {
+        return await _documentRepository.GetAllAsync();
+    }
 }

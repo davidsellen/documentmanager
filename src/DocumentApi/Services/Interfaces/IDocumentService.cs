@@ -8,4 +8,5 @@ public interface IDocumentService
     Task<Document> GetDocumentByIdAsync(string documentId);
     Task AddSignatureToDocumentAsync(string documentId, Signature signature);
     Task LogAuditActionAsync(string documentId, AuditLog auditLog);
+    Task<IEnumerable<Document>> GetAll();
 }

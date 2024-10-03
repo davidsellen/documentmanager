@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using DocumentApi.Models;
 using DocumentApi.Services.Interfaces;
+using DocumentApi.DTOs;
 namespace DocumentApi.Controllers;
 
 [ApiController]
@@ -77,28 +78,25 @@ public class DocumentsController : ControllerBase
 
         try
         {
-
-
-            // Create a new Document object for the updated metadata
-            var updatedDocument = new Document
+            
+            var document = await _documentService.GetDocumentByIdAsync(id);
+            if (document == null) 
             {
-                Id=id,
-                Name = file.FileName,
-                ContentType = file.ContentType,
-                CreatedAt = DateTime.UtcNow
-            };
-
-            using (var stream = file.OpenReadStream())
-            {
-                // Upload the new file to the file storage service
-                var documentId = await _fileStorageService.UploadFileAsync(file.FileName, stream);
-                updatedDocument.StoragePath = documentId;
-
-                // Update the document in the repository
-                await _documentService.UpdateDocumentAsync(id, updatedDocument);
-                
-                return Ok();
+                return BadRequest("File does not exist or it was removed.");
             }
+
+            var displayName = Path.GetFileNameWithoutExtension(file.FileName);
+
+            using var stream = file.OpenReadStream();
+            // Upload the new file to the file storage service
+            var versionId = await _fileStorageService.UploadFileAsync(document.FileName, stream);
+            document.VersionId = versionId;
+            document.DisplayName = displayName;
+
+            // Update the document in the repository
+            await _documentService.UpdateDocumentAsync(id, document);
+
+            return Ok();
         }
         catch (Exception ex)
         {
@@ -120,5 +118,23 @@ public class DocumentsController : ControllerBase
             return NotFound();
         }
         return Ok(document);
+    }
+
+    /// <summary>
+    /// Gets all documents of current user
+    /// </summary>
+    /// <returns>Returns a List of DocumentListItem</returns>
+    [HttpGet("")]
+    public async Task<IActionResult> GetAll()
+    {
+        var documents = await _documentService.GetAll();
+        var listItems = documents
+            .Select(document => new DocumentListItem 
+            {
+                Id = document.Id, 
+                DisplayName = document.DisplayName, 
+                CreatedAt = document.CreatedAt 
+            }).ToList();
+        return Ok(listItems);
     }
 }
