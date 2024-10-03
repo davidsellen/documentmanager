@@ -17,6 +17,7 @@ public class DocumentRepository : IDocumentRepository
         var client = new MongoClient(settings.Value.ConnectionString);
         var database = client.GetDatabase(settings.Value.DatabaseName);
         _documentsCollection = database.GetCollection<Document>("Documents");
+        
     }
 
     // Create Document

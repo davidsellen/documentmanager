@@ -1,25 +1,32 @@
 
 using Amazon.S3;
 using Amazon.S3.Model;
-using System.IO;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 
 namespace DocumentApi.Services;
 
+public class MinioFileStorageSettings
+{
+    public required string Endpoint { get; set; }
+    public required string AccessKey { get; set; }
+    public required string SecretKey { get; set; }
+    public required string BucketName { get; set; }
+}
 
 public class MinioFileStorageService: Interfaces.IFileStorageService
 {
     private readonly AmazonS3Client _s3Client;
-    private const string BucketName = "documents";
+    private readonly string BucketName;
 
-    public MinioFileStorageService()
+    public MinioFileStorageService(IOptions<MinioFileStorageSettings> settings)
     {
+        BucketName = settings.Value.BucketName;
         var config = new AmazonS3Config
         {
-            ServiceURL = "http://localhost:9000",  // MinIO endpoint
+            ServiceURL = settings.Value.Endpoint,  // MinIO endpoint
             ForcePathStyle = true
         };
-        _s3Client = new AmazonS3Client("minioadmin", "minioadmin", config);
+        _s3Client = new AmazonS3Client(settings.Value.AccessKey, settings.Value.SecretKey, config);
     }
 
     public async Task<string> UploadFileAsync(string fileName, Stream fileStream)

@@ -19,6 +19,7 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection(nameof(MongoDbSettings)));
+        builder.Services.Configure<MinioFileStorageSettings>(builder.Configuration.GetSection(nameof(MinioFileStorageSettings)));
 
         // Add services to the container.
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

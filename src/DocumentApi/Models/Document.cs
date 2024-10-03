@@ -2,7 +2,7 @@ namespace DocumentApi.Models;
 
 public class Document
 {
-    public string Id { get; set; }  // Unique document identifier
+    public required string Id { get; set; }  // Unique document identifier
     public string Name { get; set; }  // Document name (e.g., contract.pdf)
     public string OwnerId { get; set; }  // User ID of the document owner (Uploader)
     public string StoragePath { get; set; }  // Path to the document in cloud storage
@@ -12,6 +12,9 @@ public class Document
     public DocumentMetadata Metadata { get; set; }  // Metadata associated with the document
     public List<Signature> Signatures { get; set; }  // List of signatures for this document
     public List<AuditLog> AuditLogs { get; set; }  // List of actions taken on the document (audit trail)
+    public string DisplayName { get; internal set; }
+    public string FileName { get; internal set; }
+    public string VersionId { get; internal set; }
 }
 
 public class DocumentMetadata

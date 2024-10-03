@@ -33,14 +33,19 @@ public class DocumentsController : ControllerBase
         {
             using (var stream = file.OpenReadStream())
             {
+                var documentId = Guid.NewGuid().ToString();
+                var uuid = $"{documentId}{Path.GetExtension(file.FileName)}";
+                var displayName = Path.GetFileNameWithoutExtension(file.FileName);
                 // Upload the file to the file storage service
-                var filePath = await _fileStorageService.UploadFileAsync(file.FileName, stream);
+                var versionId = await _fileStorageService.UploadFileAsync(uuid, stream);
 
                 // Create document metadata
                 var document = new Document
                 {
-                    Name = file.FileName,
-                    StoragePath = filePath,
+                    Id = documentId,
+                    DisplayName = displayName,
+                    FileName = uuid,
+                    VersionId = versionId,
                     ContentType = file.ContentType,
                     CreatedAt = DateTime.UtcNow
                 };
@@ -72,9 +77,12 @@ public class DocumentsController : ControllerBase
 
         try
         {
+
+
             // Create a new Document object for the updated metadata
             var updatedDocument = new Document
             {
+                Id=id,
                 Name = file.FileName,
                 ContentType = file.ContentType,
                 CreatedAt = DateTime.UtcNow
