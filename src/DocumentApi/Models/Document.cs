@@ -1,3 +1,5 @@
+using Microsoft.Identity.Client;
+
 namespace DocumentApi.Models;
 
 public class Document
@@ -15,6 +17,8 @@ public class Document
     public string DisplayName { get; internal set; }
     public string FileName { get; internal set; }
     public string VersionId { get; internal set; }
+
+    
 }
 
 public class DocumentMetadata
@@ -27,34 +31,34 @@ public class DocumentMetadata
 
 public class Signature
 {
-    public string Id { get; set; }  // Unique signature identifier
-    public string DocumentId { get; set; }  // Document associated with this signature
-    public string SignerId { get; set; }  // User ID of the signer
-    public string Status { get; set; }  // Status of the signature (Pending, Completed, Rejected)
+    public required string Id { get; set; }  // Unique signature identifier
+    public required string DocumentId { get; set; }  // Document associated with this signature
+    public required string SignerId { get; set; }  // User ID of the signer
+    public required string Status { get; set; }  // Status of the signature (Pending, Completed, Rejected)
     public DateTime RequestedAt { get; set; }  // When the signature request was created
     public DateTime? SignedAt { get; set; }  // When the signature was completed
-    public string SignerIp { get; set; }  // IP address of the signer at the time of signing
-    public string SignatureImagePath { get; set; }  // Path to the image of the signature (if applicable)
+    public required string SignerIp { get; set; }  // IP address of the signer at the time of signing
+    public required string SignatureImagePath { get; set; }  // Path to the image of the signature (if applicable)
 }
 
 public class AuditLog
 {
-    public string Id { get; set; }  // Unique audit log identifier
-    public string DocumentId { get; set; }  // Document associated with the action
-    public string UserId { get; set; }  // User who performed the action
-    public string Action { get; set; }  // Action performed (Uploaded, Signed, Viewed, Shared, Deleted)
+    public required string Id { get; set; }  // Unique audit log identifier
+    public required string DocumentId { get; set; }  // Document associated with the action
+    public required string UserId { get; set; }  // User who performed the action
+    public required string Action { get; set; }  // Action performed (Uploaded, Signed, Viewed, Shared, Deleted)
     public DateTime ActionTimestamp { get; set; }  // When the action took place
-    public string IpAddress { get; set; }  // IP address of the user who performed the action
-    public string Details { get; set; }  // Additional details about the action (e.g., reason for rejection)
+    public required string IpAddress { get; set; }  // IP address of the user who performed the action
+    public required string Details { get; set; }  // Additional details about the action (e.g., reason for rejection)
 }
 
 public class Share
 {
-    public string Id { get; set; }  // Unique share ID
-    public string DocumentId { get; set; }  // The document being shared
-    public string SharedWithUserId { get; set; }  // The user ID with whom the document is shared
-    public string SharedByUserId { get; set; }  // The user ID of the person sharing the document
-    public string Permission { get; set; }  // Permission type (Read, Write, Sign)
+    public required string  Id { get; set; }  // Unique share ID
+    public required string DocumentId { get; set; }  // The document being shared
+    public required string SharedWithUserId { get; set; }  // The user ID with whom the document is shared
+    public required string SharedByUserId { get; set; }  // The user ID of the person sharing the document
+    public required string Permission { get; set; }  // Permission type (Read, Write, Sign)
     public DateTime SharedAt { get; set; }  // When the document was shared
     public DateTime? ExpiryDate { get; set; }  // When the share link expires (optional)
 }

@@ -9,11 +9,11 @@ services:
       - "5172:80"  # Map host port 5000 to container port 80
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - MongoDb__ConnectionString=mongodb://mongo:27017
-      - MongoDb__DatabaseName=DocumentManagementDb
-      - Minio__Endpoint=minio:9000
-      - Minio__AccessKey=minioadmin
-      - Minio__SecretKey=minioadmin
+      - MongoDbSettings__ConnectionString=mongodb://mongo:27017
+      - MongoDbSettings__DatabaseName=DocumentManagementDb
+      - MinioSettings__Endpoint=minio:9000
+      - MinioSettings__AccessKey=minioadmin
+      - MinioSettings__SecretKey=minioadmin
     depends_on:
       - mongo
       - minio

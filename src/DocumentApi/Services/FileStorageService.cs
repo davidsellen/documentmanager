@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 
 namespace DocumentApi.Services;
 
-public class MinioFileStorageSettings
+public class MinioSettings
 {
     public required string Endpoint { get; set; }
     public required string AccessKey { get; set; }
@@ -18,7 +18,7 @@ public class MinioFileStorageService: Interfaces.IFileStorageService
     private readonly AmazonS3Client _s3Client;
     private readonly string BucketName;
 
-    public MinioFileStorageService(IOptions<MinioFileStorageSettings> settings)
+    public MinioFileStorageService(IOptions<MinioSettings> settings)
     {
         BucketName = settings.Value.BucketName;
         var config = new AmazonS3Config
